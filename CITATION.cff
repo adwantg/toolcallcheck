@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+  - family-names: "Adwant"
+    given-names: "Goutam"
+    alias: "adwantg"
+title: "agent-test: Deterministic, pytest-native testing for tool-using AI agents"
+version: "0.1.0"
+date-released: "2026-04-04"
+url: "https://github.com/adwantg/agent-test"
+repository-code: "https://github.com/adwantg/agent-test"
+license: MIT
+keywords:
+  - python
+  - agent-testing
+  - mcp
+  - pytest
+  - deterministic-testing
+  - tool-calling
