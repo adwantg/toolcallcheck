@@ -1,7 +1,7 @@
 """Custom assertion plugin system.
 
 Allows users to register domain-specific assertion functions that
-integrate with the agent-test assertion workflow.
+integrate with the agentharness assertion workflow.
 """
 
 from __future__ import annotations
@@ -9,7 +9,7 @@ from __future__ import annotations
 from collections.abc import Callable
 from typing import Any
 
-from agent_test.result import AgentResult
+from agentharness.result import AgentResult
 
 # Global plugin registry
 _assertion_registry: dict[str, Callable[..., None]] = {}

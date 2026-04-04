@@ -4,13 +4,13 @@ from __future__ import annotations
 
 import pytest
 
-from agent_test.plugins import (
+from agentharness.plugins import (
     clear_assertions,
     list_assertions,
     register_assertion,
     run_custom_assertion,
 )
-from agent_test.result import AgentResult
+from agentharness.result import AgentResult
 
 
 class TestPlugins:

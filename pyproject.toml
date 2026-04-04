@@ -4,7 +4,7 @@ requires = ["hatchling>=1.27.0"]
 build-backend = "hatchling.build"
 
 [project]
-name = "agent-test"
+name = "agentharness"
 version = "0.1.0"
 description = "Deterministic, pytest-native testing for tool-using AI agents. Mock MCP tools, assert exact tool calls, and run fully offline in CI."
 readme = "README.md"
@@ -57,15 +57,15 @@ dev = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/adwantg/agent-test"
-Repository = "https://github.com/adwantg/agent-test"
-Issues = "https://github.com/adwantg/agent-test/issues"
+Homepage = "https://github.com/adwantg/agentharness"
+Repository = "https://github.com/adwantg/agentharness"
+Issues = "https://github.com/adwantg/agentharness/issues"
 
 [project.entry-points."pytest11"]
-agent_test = "agent_test.fixtures"
+agentharness = "agentharness.fixtures"
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/agent_test"]
+packages = ["src/agentharness"]
 core-metadata-version = "2.3"
 
 [tool.hatch.build.targets.sdist]
@@ -100,7 +100,7 @@ ignore_missing_imports = true
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-addopts = "-q --strict-markers --strict-config --cov=src/agent_test --cov-report=term-missing"
+addopts = "-q --strict-markers --strict-config --cov=agentharness --cov-report=term-missing"
 asyncio_mode = "auto"
 xfail_strict = true
 markers = [
@@ -111,7 +111,7 @@ markers = [
 ]
 
 [tool.coverage.run]
-source_pkgs = ["agent_test"]
+source_pkgs = ["agentharness"]
 
 [tool.coverage.report]
 fail_under = 0

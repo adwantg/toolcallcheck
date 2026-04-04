@@ -1,4 +1,4 @@
-"""AgentRunner — the central test harness for agent-test.
+"""AgentRunner — the central test harness for agentharness.
 
 Provides a single entry point for initializing an agent under test,
 injecting mock MCP servers and fake models, and running deterministic
@@ -11,9 +11,9 @@ import asyncio
 import copy
 from typing import Any
 
-from agent_test.fake_model import FakeModel
-from agent_test.mock_server import MockMCPServer
-from agent_test.result import AgentResult, ToolCall, TraceEntry
+from agentharness.fake_model import FakeModel
+from agentharness.mock_server import MockMCPServer
+from agentharness.result import AgentResult, ToolCall, TraceEntry
 
 
 class AgentRunner:

@@ -1,4 +1,4 @@
-"""Pytest markers for agent-test.
+"""Pytest markers for agentharness.
 
 Provides category-based markers for selective test execution in CI.
 """

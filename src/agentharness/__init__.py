@@ -1,4 +1,4 @@
-"""agent-test: Deterministic, pytest-native testing for tool-using AI agents.
+"""agentharness: Deterministic, pytest-native testing for tool-using AI agents.
 
 Mock MCP tools, assert exact tool calls and trajectories, verify headers
 and routing, and reproduce failures locally without depending on cloud
@@ -10,7 +10,7 @@ __version__ = "0.1.0"
 # ---------------------------------------------------------------------------
 # P0 Core
 # ---------------------------------------------------------------------------
-from agent_test.assertions import (
+from agentharness.assertions import (
     assert_headers,
     assert_model_used,
     assert_no_tool_calls,
@@ -26,18 +26,18 @@ from agent_test.assertions import (
 # ---------------------------------------------------------------------------
 # P1 Adoption & Coverage
 # ---------------------------------------------------------------------------
-from agent_test.builders import ScenarioBuilder, ToolResponseBuilder, UserMessageBuilder
-from agent_test.fake_model import FakeModel
-from agent_test.mock_server import MockMCPServer, MockTool
-from agent_test.multi_turn import Conversation
-from agent_test.offline import offline
-from agent_test.plugins import register_assertion, run_custom_assertion
-from agent_test.recording import Recorder
-from agent_test.result import AgentResult, ToolCall
-from agent_test.runner import AgentRunner
-from agent_test.scenario import scenario
-from agent_test.snapshot import assert_snapshot
-from agent_test.trajectory import assert_trajectory
+from agentharness.builders import ScenarioBuilder, ToolResponseBuilder, UserMessageBuilder
+from agentharness.fake_model import FakeModel
+from agentharness.mock_server import MockMCPServer, MockTool
+from agentharness.multi_turn import Conversation
+from agentharness.offline import offline
+from agentharness.plugins import register_assertion, run_custom_assertion
+from agentharness.recording import Recorder
+from agentharness.result import AgentResult, ToolCall
+from agentharness.runner import AgentRunner
+from agentharness.scenario import scenario
+from agentharness.snapshot import assert_snapshot
+from agentharness.trajectory import assert_trajectory
 
 __all__ = [
     "AgentResult",

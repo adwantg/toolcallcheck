@@ -6,7 +6,7 @@ import socket
 
 import pytest
 
-from agent_test.offline import NetworkBlockedError, offline
+from agentharness.offline import NetworkBlockedError, offline
 
 
 class TestOfflineMode:

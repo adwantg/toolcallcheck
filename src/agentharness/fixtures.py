@@ -1,4 +1,4 @@
-"""Pytest fixtures and plugin registration for agent-test.
+"""Pytest fixtures and plugin registration for agentharness.
 
 This module is automatically discovered by pytest through the
 ``pytest11`` entry point defined in ``pyproject.toml``.  It provides
@@ -12,8 +12,8 @@ from typing import Any
 
 import pytest
 
-from agent_test.mock_server import MockMCPServer
-from agent_test.runner import AgentRunner
+from agentharness.mock_server import MockMCPServer
+from agentharness.runner import AgentRunner
 
 
 def pytest_configure(config: Any) -> None:
@@ -49,7 +49,7 @@ def agent_runner(mock_mcp_server: MockMCPServer) -> AgentRunner:
 
 
 @pytest.fixture
-def _agent_test_isolation() -> Generator[None, None, None]:
+def _agentharness_isolation() -> Generator[None, None, None]:
     """Internal fixture ensuring no shared mutable state between tests.
 
     This is an autouse fixture when running with ``pytest-xdist`` —

@@ -67,8 +67,8 @@ temp/
 *.key
 *.p12
 
-# Snapshots (managed by agent-test)
-.agent_test_snapshots/
+# Snapshots (managed by agentharness)
+.agentharness_snapshots/
 
 skills/*
 document/*

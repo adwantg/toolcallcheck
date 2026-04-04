@@ -1,4 +1,4 @@
-# Security Policy for agent-test
+# Security Policy for agentharness
 
 ## Supported Versions
 

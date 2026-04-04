@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from agent_test.mock_server import MockMCPServer, MockTool
+from agentharness.mock_server import MockMCPServer, MockTool
 
 
 class TestMockTool:

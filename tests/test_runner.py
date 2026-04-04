@@ -8,9 +8,9 @@ import tempfile
 import pytest
 import yaml
 
-from agent_test.fake_model import FakeModel
-from agent_test.mock_server import MockMCPServer, MockTool
-from agent_test.runner import AgentRunner
+from agentharness.fake_model import FakeModel
+from agentharness.mock_server import MockMCPServer, MockTool
+from agentharness.runner import AgentRunner
 
 
 class TestAgentRunnerInit:

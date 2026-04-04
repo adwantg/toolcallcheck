@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from agent_test.scenario import scenario
+from agentharness.scenario import scenario
 
 CASES = [
     {"id": "case_a", "value": 1, "expected": "one"},

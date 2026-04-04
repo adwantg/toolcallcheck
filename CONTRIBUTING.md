@@ -1,4 +1,4 @@
-# Contributing to agent-test
+# Contributing to agentharness
 
 Thank you for contributing! We welcome bug reports, feature requests, and pull requests.
 
@@ -6,8 +6,8 @@ Thank you for contributing! We welcome bug reports, feature requests, and pull r
 
 ```bash
 # Clone the repository
-git clone https://github.com/adwantg/agent-test.git
-cd agent-test
+git clone https://github.com/adwantg/agentharness.git
+cd agentharness
 
 # Create a virtual environment using Python 3.10+
 python3 -m venv .venv

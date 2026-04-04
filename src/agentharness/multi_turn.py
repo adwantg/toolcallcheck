@@ -8,8 +8,8 @@ from __future__ import annotations
 
 from typing import Any
 
-from agent_test.result import AgentResult
-from agent_test.runner import AgentRunner
+from agentharness.result import AgentResult
+from agentharness.runner import AgentRunner
 
 
 class Conversation:

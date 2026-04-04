@@ -18,7 +18,7 @@ class NetworkBlockedError(RuntimeError):
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(
             "Network call attempted during offline agent test. "
-            "Use agent_test.offline() to enforce network isolation, "
+            "Use agentharness.offline() to enforce network isolation, "
             "or add the target to the allow-list."
         )
 

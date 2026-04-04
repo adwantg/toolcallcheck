@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from agent_test.fake_model import FakeModel
+from agentharness.fake_model import FakeModel
 
 
 class TestFakeModelScripted:

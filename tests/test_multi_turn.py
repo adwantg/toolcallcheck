@@ -4,11 +4,11 @@ from __future__ import annotations
 
 import pytest
 
-from agent_test.assertions import assert_no_tool_calls
-from agent_test.fake_model import FakeModel
-from agent_test.mock_server import MockMCPServer, MockTool
-from agent_test.multi_turn import Conversation
-from agent_test.runner import AgentRunner
+from agentharness.assertions import assert_no_tool_calls
+from agentharness.fake_model import FakeModel
+from agentharness.mock_server import MockMCPServer, MockTool
+from agentharness.multi_turn import Conversation
+from agentharness.runner import AgentRunner
 
 
 class TestConversation:
