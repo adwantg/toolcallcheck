@@ -5,21 +5,23 @@ build-backend = "hatchling.build"
 
 [project]
 name = "toolcallcheck"
-version = "0.1.0"
-description = "Deterministic, pytest-native testing for tool-using AI agents. Mock MCP tools, assert exact tool calls, and run fully offline in CI."
+version = "0.2.0"
+description = "Deterministic Python testing for tool-using agents. Mock MCP tools, assert exact tool calls and trajectories, verify headers, and run offline in CI."
 readme = "README.md"
 requires-python = ">=3.10"
 license = { text = "MIT" }
 authors = [{ name = "Goutam Adwant" }]
 keywords = [
     "agent-testing",
-    "mcp",
-    "pytest",
-    "tool-calling",
-    "deterministic-testing",
     "ai-agents",
+    "deterministic-testing",
     "llm-testing",
+    "mcp",
+    "model-context-protocol",
+    "offline-testing",
+    "pytest",
     "regression-testing",
+    "tool-calling",
 ]
 classifiers = [
     "Development Status :: 3 - Alpha",
@@ -100,7 +102,7 @@ ignore_missing_imports = true
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-addopts = "-q --strict-markers --strict-config --cov=toolcallcheck --cov-report=term-missing"
+addopts = "-q --strict-markers --strict-config"
 asyncio_mode = "auto"
 xfail_strict = true
 markers = [

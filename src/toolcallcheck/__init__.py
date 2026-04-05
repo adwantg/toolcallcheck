@@ -1,11 +1,11 @@
-"""toolcallcheck: Deterministic, pytest-native testing for tool-using AI agents.
+"""toolcallcheck: Deterministic testing for tool-using AI agents.
 
 Mock MCP tools, assert exact tool calls and trajectories, verify headers
-and routing, and reproduce failures locally without depending on cloud
-dashboards or live models.
+and model metadata, and reproduce failures locally without depending on
+cloud dashboards or live models.
 """
 
-__version__ = "0.1.0"
+__version__ = "0.2.0"
 
 # ---------------------------------------------------------------------------
 # P0 Core

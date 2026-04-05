@@ -54,6 +54,7 @@ class Conversation:
             site_id=site_id,
             headers=headers,
             metadata=metadata,
+            _prior_messages=self._history,
         )
 
         self._results.append(result)
@@ -68,7 +69,15 @@ class Conversation:
         **kwargs: Any,
     ) -> AgentResult:
         """Synchronous convenience wrapper for :meth:`say`."""
-        return self._runner.sync_invoke(message, **kwargs)
+        result = self._runner.sync_invoke(
+            message,
+            _prior_messages=self._history,
+            **kwargs,
+        )
+        self._results.append(result)
+        self._history.append({"role": "user", "content": message})
+        self._history.append({"role": "assistant", "content": result.response})
+        return result
 
     @property
     def turn_count(self) -> int:

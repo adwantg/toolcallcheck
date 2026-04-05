@@ -8,11 +8,13 @@ invocations.
 from __future__ import annotations
 
 import asyncio
+import contextlib
 import copy
 from typing import Any
 
 from toolcallcheck.fake_model import FakeModel
 from toolcallcheck.mock_server import MockMCPServer
+from toolcallcheck.offline import offline as offline_context
 from toolcallcheck.result import AgentResult, ToolCall, TraceEntry
 
 
@@ -96,6 +98,7 @@ class AgentRunner:
         site_id: str | None = None,
         headers: dict[str, str] | None = None,
         metadata: dict[str, Any] | None = None,
+        _prior_messages: list[dict[str, Any]] | None = None,
     ) -> AgentResult:
         """Run the agent with the given user message.
 
@@ -134,102 +137,102 @@ class AgentRunner:
         if headers:
             merged_headers.update(headers)
 
-        # Build tool catalog for model context
-        tool_catalog = self._mcp_server.list_tools()
+        with offline_context() if self._offline else contextlib.nullcontext():
+            # Build tool catalog for model context
+            tool_catalog = self._mcp_server.list_tools()
 
-        # Initialize trace and tool call collection
-        trace: list[TraceEntry] = []
-        all_tool_calls: list[ToolCall] = []
+            # Initialize trace and tool call collection
+            trace: list[TraceEntry] = []
+            all_tool_calls: list[ToolCall] = []
 
-        # Add user message to trace
-        trace.append(TraceEntry(role="user", content=message))
+            # Add user message to trace
+            trace.append(TraceEntry(role="user", content=message))
 
-        # The conversation history for the model
-        conversation: list[dict[str, Any]] = [
-            {"role": "user", "content": message},
-        ]
+            # The conversation history for the model
+            conversation = copy.deepcopy(_prior_messages or [])
+            conversation.append({"role": "user", "content": message})
 
-        final_response = ""
-        turns = 0
+            final_response = ""
+            turns = 0
 
-        while turns < self._max_turns:
-            turns += 1
+            while turns < self._max_turns:
+                turns += 1
 
-            if self._model is None:
-                # No model — return empty response
-                final_response = ""
-                trace.append(TraceEntry(role="assistant", content=""))
-                break
+                if self._model is None:
+                    # No model — return empty response
+                    final_response = ""
+                    trace.append(TraceEntry(role="assistant", content=""))
+                    break
 
-            # Get model response
-            model_response = self._model.generate(
-                messages=conversation,
-                tools=tool_catalog,
-                headers=merged_headers,
-            )
-
-            # Check if model wants to call tools
-            tool_call_intents = model_response.get("tool_calls", [])
-
-            if not tool_call_intents:
-                # Model produced a final text response
-                final_response = model_response.get("content", "")
-                trace.append(TraceEntry(role="assistant", content=final_response))
-                break
-
-            # Process tool calls
-            tool_results: list[dict[str, Any]] = []
-            for intent in tool_call_intents:
-                tool_name = intent["name"]
-                tool_args = intent.get("args", {})
-
-                # Dispatch against mock MCP server
-                mcp_result = self._mcp_server.call_tool(tool_name, tool_args)
-
-                if "error" in mcp_result:
-                    tc = ToolCall(
-                        name=tool_name,
-                        args=tool_args,
-                        error=str(mcp_result["error"]),
-                    )
-                else:
-                    tc = ToolCall(
-                        name=tool_name,
-                        args=tool_args,
-                        response=mcp_result.get("result"),
-                    )
-                all_tool_calls.append(tc)
-                trace.append(TraceEntry(role="tool", tool_call=tc))
-
-                tool_results.append(
-                    {
-                        "role": "tool",
-                        "name": tool_name,
-                        "content": mcp_result.get("result", mcp_result.get("error")),
-                    }
+                # Get model response
+                model_response = self._model.generate(
+                    messages=conversation,
+                    tools=tool_catalog,
+                    headers=merged_headers,
                 )
 
-            # Add assistant message with tool calls to conversation
-            conversation.append(
-                {
-                    "role": "assistant",
-                    "tool_calls": tool_call_intents,
-                }
+                # Check if model wants to call tools
+                tool_call_intents = model_response.get("tool_calls", [])
+
+                if not tool_call_intents:
+                    # Model produced a final text response
+                    final_response = model_response.get("content", "")
+                    trace.append(TraceEntry(role="assistant", content=final_response))
+                    break
+
+                # Process tool calls
+                tool_results: list[dict[str, Any]] = []
+                for intent in tool_call_intents:
+                    tool_name = intent["name"]
+                    tool_args = intent.get("args", {})
+
+                    # Dispatch against mock MCP server
+                    mcp_result = self._mcp_server.call_tool(tool_name, tool_args)
+
+                    if "error" in mcp_result:
+                        tc = ToolCall(
+                            name=tool_name,
+                            args=tool_args,
+                            error=str(mcp_result["error"]),
+                        )
+                    else:
+                        tc = ToolCall(
+                            name=tool_name,
+                            args=tool_args,
+                            response=mcp_result.get("result"),
+                        )
+                    all_tool_calls.append(tc)
+                    trace.append(TraceEntry(role="tool", tool_call=tc))
+
+                    tool_results.append(
+                        {
+                            "role": "tool",
+                            "name": tool_name,
+                            "content": mcp_result.get("result", mcp_result.get("error")),
+                        }
+                    )
+
+                # Add assistant message with tool calls to conversation
+                conversation.append(
+                    {
+                        "role": "assistant",
+                        "tool_calls": tool_call_intents,
+                    }
+                )
+                # Add tool results to conversation
+                conversation.extend(tool_results)
+
+            result_metadata = copy.deepcopy(metadata or {})
+            result_metadata["turns"] = turns
+
+            return AgentResult(
+                response=final_response,
+                tool_calls=all_tool_calls,
+                model_used=self._model_name,
+                headers=merged_headers,
+                trace=trace,
+                metadata=result_metadata,
             )
-            # Add tool results to conversation
-            conversation.extend(tool_results)
-
-        result_metadata = copy.deepcopy(metadata or {})
-        result_metadata["turns"] = turns
-
-        return AgentResult(
-            response=final_response,
-            tool_calls=all_tool_calls,
-            model_used=self._model_name,
-            headers=merged_headers,
-            trace=trace,
-            metadata=result_metadata,
-        )
 
     def sync_invoke(
         self,

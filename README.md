@@ -7,7 +7,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![CI](https://github.com/adwantg/toolcallcheck/actions/workflows/ci.yml/badge.svg)](https://github.com/adwantg/toolcallcheck/actions/workflows/ci.yml)
 
-`toolcallcheck` is the open-source Python library for testing tool-using agents. Mock MCP tools, assert exact tool calls and trajectories, verify headers and routing, and run fully offline in CI — without depending on cloud dashboards or live models.
+`toolcallcheck` is an open-source Python library for testing tool-using agents. Mock MCP tools, assert exact tool calls and execution trajectories, verify headers and model metadata, and run fully offline in CI without relying on cloud dashboards or live models.
 
 ## Why toolcallcheck?
 
@@ -17,7 +17,7 @@
 | **Local/offline execution** | No cloud dashboard dependency — runs in CI and on laptops |
 | **MCP & tool contract testing** | Purpose-built for tool-calling agents, not just prompt testing |
 | **Python-native ergonomics** | pytest fixtures, markers, and assertion helpers — not config files |
-| **Framework-agnostic** | Works across OpenAI Agents, LangGraph, PydanticAI, CrewAI |
+| **Framework-adapter friendly** | Ships a framework adapter protocol plus stubs for OpenAI Agents, LangGraph, PydanticAI, and CrewAI |
 
 ## Installation
 
@@ -840,7 +840,7 @@ assert_tool_args_contain(result, "create_record", {
 
 ## Framework Adapters
 
-`toolcallcheck` provides a `FrameworkAdapter` protocol for integrating with specific agent frameworks:
+`toolcallcheck` provides a `FrameworkAdapter` protocol plus starter adapter stubs for integrating with specific agent frameworks:
 
 ```python
 from toolcallcheck.adapters import FrameworkAdapter

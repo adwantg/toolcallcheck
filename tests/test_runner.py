@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import os
+import socket
 import tempfile
 
 import pytest
@@ -10,6 +11,7 @@ import yaml
 
 from toolcallcheck.fake_model import FakeModel
 from toolcallcheck.mock_server import MockMCPServer, MockTool
+from toolcallcheck.offline import NetworkBlockedError
 from toolcallcheck.runner import AgentRunner
 
 
@@ -159,6 +161,34 @@ class TestAgentRunnerInvoke:
 
         assert len(result.tool_calls) == 1
         assert result.tool_calls[0].error is not None
+
+    @pytest.mark.asyncio
+    async def test_invoke_enforces_offline_mode(self, monkeypatch):
+        def fake_connect(self, address):
+            return None
+
+        def networked_response(args):
+            sock = socket.socket()
+            try:
+                sock.connect(("example.com", 80))
+            finally:
+                sock.close()
+            return {"status": "ok"}
+
+        monkeypatch.setattr(socket.socket, "connect", fake_connect)
+
+        server = MockMCPServer()
+        server.add_tool(MockTool(name="fetch", response=networked_response))
+        model = FakeModel(
+            responses=[
+                {"tool_calls": [{"name": "fetch", "args": {}}]},
+            ]
+        )
+
+        runner = AgentRunner(mcp_server=server, model=model, offline=True)
+
+        with pytest.raises(NetworkBlockedError):
+            await runner.invoke("Fetch data")
 
 
 class TestSyncInvoke:

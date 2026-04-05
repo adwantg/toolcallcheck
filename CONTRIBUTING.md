@@ -35,7 +35,7 @@ ruff check .
 mypy src
 
 # 4. Tests and Coverage (minimum 90% required)
-python -m pytest
+python -m pytest --cov=toolcallcheck --cov-report=term-missing
 
 # 5. Security Audit
 pip-audit

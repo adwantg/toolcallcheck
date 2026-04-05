@@ -75,6 +75,26 @@ class TestConversation:
         assert h[1]["role"] == "assistant"
 
     @pytest.mark.asyncio
+    async def test_history_is_passed_to_later_turns(self):
+        model = FakeModel(
+            responses=[
+                {"content": "First reply"},
+                {"content": "Second reply"},
+            ]
+        )
+        runner = AgentRunner(model=model)
+        conv = Conversation(runner)
+
+        await conv.say("Hello")
+        await conv.say("Follow up")
+
+        assert model.call_log[1]["messages"] == [
+            {"role": "user", "content": "Hello"},
+            {"role": "assistant", "content": "First reply"},
+            {"role": "user", "content": "Follow up"},
+        ]
+
+    @pytest.mark.asyncio
     async def test_all_tool_calls(self, user_runner):
         conv = Conversation(user_runner)
         await conv.say("Turn 1")  # No tool calls
@@ -98,3 +118,9 @@ class TestConversation:
         conv = Conversation(runner)
         r = conv.say_sync("Hello")
         assert r.response == "Sync reply"
+        assert conv.turn_count == 1
+        assert conv.last_result is r
+        assert conv.history == [
+            {"role": "user", "content": "Hello"},
+            {"role": "assistant", "content": "Sync reply"},
+        ]
