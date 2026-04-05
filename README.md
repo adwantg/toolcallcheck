@@ -1,15 +1,15 @@
-# agentharness
+# toolcallcheck
 
 > **Deterministic, pytest-native testing for tool-using AI agents.**
 
-[![PyPI](https://img.shields.io/pypi/v/agentharness)](https://pypi.org/project/agentharness/)
-[![Python](https://img.shields.io/pypi/pyversions/agentharness)](https://pypi.org/project/agentharness/)
+[![PyPI](https://img.shields.io/pypi/v/toolcallcheck)](https://pypi.org/project/toolcallcheck/)
+[![Python](https://img.shields.io/pypi/pyversions/toolcallcheck)](https://pypi.org/project/toolcallcheck/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![CI](https://github.com/adwantg/agentharness/actions/workflows/ci.yml/badge.svg)](https://github.com/adwantg/agentharness/actions/workflows/ci.yml)
+[![CI](https://github.com/adwantg/toolcallcheck/actions/workflows/ci.yml/badge.svg)](https://github.com/adwantg/toolcallcheck/actions/workflows/ci.yml)
 
-`agentharness` is the open-source Python library for testing tool-using agents. Mock MCP tools, assert exact tool calls and trajectories, verify headers and routing, and run fully offline in CI — without depending on cloud dashboards or live models.
+`toolcallcheck` is the open-source Python library for testing tool-using agents. Mock MCP tools, assert exact tool calls and trajectories, verify headers and routing, and run fully offline in CI — without depending on cloud dashboards or live models.
 
-## Why agentharness?
+## Why toolcallcheck?
 
 | What you get | How it's different |
 |---|---|
@@ -23,20 +23,20 @@
 
 ```bash
 # Requires Python 3.10+
-pip install agentharness
+pip install toolcallcheck
 ```
 
 For development:
 
 ```bash
-pip install agentharness[dev]
+pip install toolcallcheck[dev]
 ```
 
 ## Quick Start
 
 ```python
 import pytest
-from agentharness import (
+from toolcallcheck import (
     AgentRunner, MockMCPServer, MockTool, FakeModel,
     assert_tool_calls, assert_response_contains, assert_no_tool_calls,
 )
@@ -123,7 +123,7 @@ async def test_create_user():
 
 ## Core Concepts
 
-`agentharness` provides four building blocks:
+`toolcallcheck` provides four building blocks:
 
 1. **`MockMCPServer`** — In-process mock MCP server with registered tools
 2. **`FakeModel`** — Deterministic model that returns scripted responses
@@ -149,7 +149,7 @@ The `MockMCPServer` is an in-process mock that requires no TCP networking and no
 ### Basic Tool Registration
 
 ```python
-from agentharness import MockMCPServer, MockTool
+from toolcallcheck import MockMCPServer, MockTool
 
 server = MockMCPServer()
 
@@ -248,7 +248,7 @@ The `AgentRunner` orchestrates the full agent loop: model generation → tool di
 ### Basic Usage
 
 ```python
-from agentharness import AgentRunner, MockMCPServer, MockTool, FakeModel
+from toolcallcheck import AgentRunner, MockMCPServer, MockTool, FakeModel
 
 server = MockMCPServer()
 server.add_tool(MockTool(name="lookup", response={"found": True}))
@@ -336,7 +336,7 @@ result.to_dict()  # Full dict representation
 ### Tool Call Assertions
 
 ```python
-from agentharness import (
+from toolcallcheck import (
     assert_tool_calls,
     assert_tool_call_count,
     assert_no_tool_calls,
@@ -377,7 +377,7 @@ assert_tool_args_contain(result, "retry_api", {"attempt": 2}, call_index=1)
 ### Response Assertions
 
 ```python
-from agentharness import (
+from toolcallcheck import (
     assert_response_contains,
     assert_response_matches,
     assert_response_equals,
@@ -396,7 +396,7 @@ assert_response_equals(result, "The invitation has been sent successfully.")
 ### Header & Auth Assertions
 
 ```python
-from agentharness import assert_headers
+from toolcallcheck import assert_headers
 
 # Assert specific headers are present with correct values
 assert_headers(result, {
@@ -413,7 +413,7 @@ assert_headers(result, {
 ### Model Selection Assertions
 
 ```python
-from agentharness import assert_model_used
+from toolcallcheck import assert_model_used
 
 # Assert the model or routing strategy used
 assert_model_used(result, "Nova-pro")
@@ -428,7 +428,7 @@ The `FakeModel` replaces the real LLM with deterministic behavior. It supports t
 ### Scripted Sequence
 
 ```python
-from agentharness import FakeModel
+from toolcallcheck import FakeModel
 
 # Responses are returned in order, one per model call
 model = FakeModel(responses=[
@@ -475,8 +475,8 @@ model.reset()      # Reset to initial state
 Test stateful, multi-step agent workflows:
 
 ```python
-from agentharness import AgentRunner, FakeModel, Conversation, MockMCPServer, MockTool
-from agentharness import assert_no_tool_calls, assert_tool_calls, assert_response_contains
+from toolcallcheck import AgentRunner, FakeModel, Conversation, MockMCPServer, MockTool
+from toolcallcheck import assert_no_tool_calls, assert_tool_calls, assert_response_contains
 
 server = MockMCPServer()
 server.add_tool(MockTool(name="create_user", response={"status": "created"}))
@@ -524,13 +524,13 @@ conv.reset()         # Clear conversation state
 Compare agent output against saved golden files:
 
 ```python
-from agentharness import assert_snapshot
+from toolcallcheck import assert_snapshot
 
 @pytest.mark.asyncio
 async def test_response_stability():
     result = await runner.invoke("Get account summary")
 
-    # First run: creates .agentharness_snapshots/account_summary.json
+    # First run: creates .toolcallcheck_snapshots/account_summary.json
     # Subsequent runs: compares against saved snapshot
     assert_snapshot(result, "account_summary")
 
@@ -545,7 +545,7 @@ async def test_response_stability():
 Update all snapshots at once:
 
 ```bash
-AGENTHARNESS_UPDATE_SNAPSHOTS=1 pytest tests/
+TOOLCALLCHECK_UPDATE_SNAPSHOTS=1 pytest tests/
 ```
 
 ---
@@ -555,7 +555,7 @@ AGENTHARNESS_UPDATE_SNAPSHOTS=1 pytest tests/
 Validate the full sequence of messages and tool calls:
 
 ```python
-from agentharness import assert_trajectory
+from toolcallcheck import assert_trajectory
 
 @pytest.mark.asyncio
 async def test_complete_workflow():
@@ -588,7 +588,7 @@ async def test_complete_workflow():
 Capture agent executions for debugging:
 
 ```python
-from agentharness import Recorder
+from toolcallcheck import Recorder
 
 recorder = Recorder()
 
@@ -618,7 +618,7 @@ Fluent APIs to reduce test boilerplate:
 ### UserMessageBuilder
 
 ```python
-from agentharness import UserMessageBuilder
+from toolcallcheck import UserMessageBuilder
 
 msg = (
     UserMessageBuilder("Create admin user Jane Doe jane@example.com")
@@ -635,7 +635,7 @@ result = await runner.invoke(**msg)
 ### ToolResponseBuilder
 
 ```python
-from agentharness import ToolResponseBuilder
+from toolcallcheck import ToolResponseBuilder
 
 tool = (
     ToolResponseBuilder("create_user")
@@ -660,7 +660,7 @@ error_tool = (
 ### ScenarioBuilder
 
 ```python
-from agentharness import ScenarioBuilder, MockTool
+from toolcallcheck import ScenarioBuilder, MockTool
 
 scenario = (
     ScenarioBuilder("happy_path_create")
@@ -686,7 +686,7 @@ assert result.response == "User created!"
 Block all real network calls during testing:
 
 ```python
-from agentharness import offline
+from toolcallcheck import offline
 
 @pytest.mark.asyncio
 async def test_offline_safety():
@@ -707,7 +707,7 @@ async def test_offline_safety():
 Drive multiple test cases from data:
 
 ```python
-from agentharness import scenario
+from toolcallcheck import scenario
 
 CASES = [
     {
@@ -744,7 +744,7 @@ def test_create_user_scenarios(case):
 Register domain-specific assertions:
 
 ```python
-from agentharness import register_assertion, run_custom_assertion, AgentResult
+from toolcallcheck import register_assertion, run_custom_assertion, AgentResult
 
 # Register a PII detection assertion
 def assert_no_pii(result: AgentResult, fields: list[str] | None = None):
@@ -768,7 +768,7 @@ async def test_no_pii_leakage():
 Categorize tests for selective CI execution:
 
 ```python
-from agentharness.markers import agent_behavior, agent_error, agent_multi_turn, agent_offline
+from toolcallcheck.markers import agent_behavior, agent_error, agent_multi_turn, agent_offline
 
 @agent_behavior
 async def test_happy_path():
@@ -802,7 +802,7 @@ pytest -m "not agent_offline"   # Skip offline tests
 Tools can return different responses based on input arguments:
 
 ```python
-from agentharness import MockTool
+from toolcallcheck import MockTool
 
 def weather_response(args):
     city = args.get("city", "")
@@ -825,7 +825,7 @@ tool = MockTool(
 Assert only the arguments you care about:
 
 ```python
-from agentharness import assert_tool_args_contain
+from toolcallcheck import assert_tool_args_contain
 
 # Agent may add auto-generated fields (timestamps, request IDs)
 # Only check the fields you care about
@@ -840,13 +840,13 @@ assert_tool_args_contain(result, "create_record", {
 
 ## Framework Adapters
 
-`agentharness` provides a `FrameworkAdapter` protocol for integrating with specific agent frameworks:
+`toolcallcheck` provides a `FrameworkAdapter` protocol for integrating with specific agent frameworks:
 
 ```python
-from agentharness.adapters import FrameworkAdapter
+from toolcallcheck.adapters import FrameworkAdapter
 
 # Available adapter stubs (implement .invoke() for your framework):
-from agentharness.adapters import (
+from toolcallcheck.adapters import (
     OpenAIAgentsAdapter,
     LangGraphAdapter,
     PydanticAIAdapter,
@@ -912,9 +912,9 @@ Response does not contain expected substring.
 ## Architecture
 
 ```
-agentharness/
+toolcallcheck/
 ├── src/
-│   └── agentharness/
+│   └── toolcallcheck/
 │       ├── __init__.py          # Public API exports
 │       ├── mock_server.py       # MockMCPServer, MockTool
 │       ├── runner.py            # AgentRunner (orchestration)
@@ -948,7 +948,7 @@ agentharness/
 
 ## Comparison with Alternatives
 
-| Capability | agentharness | Promptfoo | DeepEval | LangSmith | Inspect AI |
+| Capability | toolcallcheck | Promptfoo | DeepEval | LangSmith | Inspect AI |
 |---|:---:|:---:|:---:|:---:|:---:|
 | Python-first pytest DX | ✅ | ⚠️ | ✅ | ⚠️ | ⚠️ |
 | Deterministic tool-call assertions | ✅ | ⚠️ | ⚠️ | ✅ | ⚠️ |

@@ -8,7 +8,7 @@ from __future__ import annotations
 
 from typing import Any
 
-from agentharness.result import AgentResult
+from toolcallcheck.result import AgentResult
 
 
 def assert_trajectory(

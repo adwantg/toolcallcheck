@@ -4,13 +4,13 @@ from __future__ import annotations
 
 import pytest
 
-from agentharness.plugins import (
+from toolcallcheck.plugins import (
     clear_assertions,
     list_assertions,
     register_assertion,
     run_custom_assertion,
 )
-from agentharness.result import AgentResult
+from toolcallcheck.result import AgentResult
 
 
 class TestPlugins:

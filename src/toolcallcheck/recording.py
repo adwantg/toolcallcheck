@@ -10,7 +10,7 @@ import json
 from pathlib import Path
 from typing import Any
 
-from agentharness.result import AgentResult
+from toolcallcheck.result import AgentResult
 
 
 class Recorder:

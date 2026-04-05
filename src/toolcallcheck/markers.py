@@ -1,4 +1,4 @@
-"""Pytest markers for agentharness.
+"""Pytest markers for toolcallcheck.
 
 Provides category-based markers for selective test execution in CI.
 """

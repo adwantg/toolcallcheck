@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from agentharness.diff import format_tool_call_diff, format_value_diff
+from toolcallcheck.diff import format_tool_call_diff, format_value_diff
 
 
 class TestFormatToolCallDiff:

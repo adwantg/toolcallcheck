@@ -4,8 +4,8 @@ from __future__ import annotations
 
 import pytest
 
-from agentharness.result import AgentResult, ToolCall, TraceEntry
-from agentharness.trajectory import assert_trajectory
+from toolcallcheck.result import AgentResult, ToolCall, TraceEntry
+from toolcallcheck.trajectory import assert_trajectory
 
 
 def _make_result(trace_entries):

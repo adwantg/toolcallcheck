@@ -1,4 +1,4 @@
-"""agentharness: Deterministic, pytest-native testing for tool-using AI agents.
+"""toolcallcheck: Deterministic, pytest-native testing for tool-using AI agents.
 
 Mock MCP tools, assert exact tool calls and trajectories, verify headers
 and routing, and reproduce failures locally without depending on cloud
@@ -10,7 +10,7 @@ __version__ = "0.1.0"
 # ---------------------------------------------------------------------------
 # P0 Core
 # ---------------------------------------------------------------------------
-from agentharness.assertions import (
+from toolcallcheck.assertions import (
     assert_headers,
     assert_model_used,
     assert_no_tool_calls,
@@ -26,18 +26,18 @@ from agentharness.assertions import (
 # ---------------------------------------------------------------------------
 # P1 Adoption & Coverage
 # ---------------------------------------------------------------------------
-from agentharness.builders import ScenarioBuilder, ToolResponseBuilder, UserMessageBuilder
-from agentharness.fake_model import FakeModel
-from agentharness.mock_server import MockMCPServer, MockTool
-from agentharness.multi_turn import Conversation
-from agentharness.offline import offline
-from agentharness.plugins import register_assertion, run_custom_assertion
-from agentharness.recording import Recorder
-from agentharness.result import AgentResult, ToolCall
-from agentharness.runner import AgentRunner
-from agentharness.scenario import scenario
-from agentharness.snapshot import assert_snapshot
-from agentharness.trajectory import assert_trajectory
+from toolcallcheck.builders import ScenarioBuilder, ToolResponseBuilder, UserMessageBuilder
+from toolcallcheck.fake_model import FakeModel
+from toolcallcheck.mock_server import MockMCPServer, MockTool
+from toolcallcheck.multi_turn import Conversation
+from toolcallcheck.offline import offline
+from toolcallcheck.plugins import register_assertion, run_custom_assertion
+from toolcallcheck.recording import Recorder
+from toolcallcheck.result import AgentResult, ToolCall
+from toolcallcheck.runner import AgentRunner
+from toolcallcheck.scenario import scenario
+from toolcallcheck.snapshot import assert_snapshot
+from toolcallcheck.trajectory import assert_trajectory
 
 __all__ = [
     "AgentResult",

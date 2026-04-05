@@ -7,8 +7,8 @@ import tempfile
 
 import pytest
 
-from agentharness.recording import Recorder
-from agentharness.result import AgentResult, ToolCall, TraceEntry
+from toolcallcheck.recording import Recorder
+from toolcallcheck.result import AgentResult, ToolCall, TraceEntry
 
 
 class TestRecorder:

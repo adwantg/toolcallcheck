@@ -11,10 +11,10 @@ import os
 from pathlib import Path
 from typing import Any
 
-from agentharness.result import AgentResult
+from toolcallcheck.result import AgentResult
 
-_SNAPSHOT_DIR = ".agentharness_snapshots"
-_UPDATE_ENV_VAR = "AGENTHARNESS_UPDATE_SNAPSHOTS"
+_SNAPSHOT_DIR = ".toolcallcheck_snapshots"
+_UPDATE_ENV_VAR = "TOOLCALLCHECK_UPDATE_SNAPSHOTS"
 
 
 def assert_snapshot(
@@ -39,10 +39,10 @@ def assert_snapshot(
     snapshot_name:
         A unique name for this snapshot (used as filename).
     snapshot_dir:
-        Directory for snapshot files (default: ``.agentharness_snapshots/``).
+        Directory for snapshot files (default: ``.toolcallcheck_snapshots/``).
     update:
         If ``True``, overwrite the existing snapshot.  Can also be set
-        via the ``AGENTHARNESS_UPDATE_SNAPSHOTS=1`` environment variable.
+        via the ``TOOLCALLCHECK_UPDATE_SNAPSHOTS=1`` environment variable.
     include_tool_calls:
         Include tool calls in the snapshot (default ``True``).
     include_model:
@@ -83,6 +83,6 @@ def assert_snapshot(
             parts.append(f"    saved:  {json.dumps(existing.get('tool_calls'), default=str)}")
             parts.append(f"    actual: {json.dumps(snap_data.get('tool_calls'), default=str)}")
 
-        parts.append("\n  To update: set AGENTHARNESS_UPDATE_SNAPSHOTS=1 or pass update=True")
+        parts.append("\n  To update: set TOOLCALLCHECK_UPDATE_SNAPSHOTS=1 or pass update=True")
 
         raise AssertionError("\n".join(parts))

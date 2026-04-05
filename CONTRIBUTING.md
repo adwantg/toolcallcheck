@@ -1,4 +1,4 @@
-# Contributing to agentharness
+# Contributing to toolcallcheck
 
 Thank you for contributing! We welcome bug reports, feature requests, and pull requests.
 
@@ -6,8 +6,8 @@ Thank you for contributing! We welcome bug reports, feature requests, and pull r
 
 ```bash
 # Clone the repository
-git clone https://github.com/adwantg/agentharness.git
-cd agentharness
+git clone https://github.com/adwantg/toolcallcheck.git
+cd toolcallcheck
 
 # Create a virtual environment using Python 3.10+
 python3 -m venv .venv

@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import pytest
 
-from agentharness.assertions import (
+from toolcallcheck.assertions import (
     assert_headers,
     assert_model_used,
     assert_no_tool_calls,
@@ -16,7 +16,7 @@ from agentharness.assertions import (
     assert_tool_call_order,
     assert_tool_calls,
 )
-from agentharness.result import AgentResult, ToolCall
+from toolcallcheck.result import AgentResult, ToolCall
 
 # ---- Fixtures ---------------------------------------------------------------
 

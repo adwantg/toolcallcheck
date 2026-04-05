@@ -4,13 +4,13 @@ from __future__ import annotations
 
 import pytest
 
-from agentharness.builders import (
+from toolcallcheck.builders import (
     BuiltScenario,
     ScenarioBuilder,
     ToolResponseBuilder,
     UserMessageBuilder,
 )
-from agentharness.mock_server import MockTool
+from toolcallcheck.mock_server import MockTool
 
 
 class TestUserMessageBuilder:

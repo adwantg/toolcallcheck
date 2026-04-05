@@ -1,6 +1,6 @@
 """Framework adapter protocol and stubs.
 
-Defines the base protocol for adapting agentharness to different
+Defines the base protocol for adapting toolcallcheck to different
 agent frameworks: OpenAI Agents, LangGraph, PydanticAI, CrewAI.
 """
 
@@ -8,14 +8,14 @@ from __future__ import annotations
 
 from typing import Any, Protocol, runtime_checkable
 
-from agentharness.result import AgentResult
+from toolcallcheck.result import AgentResult
 
 
 @runtime_checkable
 class FrameworkAdapter(Protocol):
     """Protocol that framework adapters must implement.
 
-    An adapter bridges between agentharness's mock infrastructure and
+    An adapter bridges between toolcallcheck's mock infrastructure and
     a specific agent framework's execution model.
     """
 

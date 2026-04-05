@@ -1,9 +1,9 @@
-"""Tests for pytest fixtures provided by agentharness."""
+"""Tests for pytest fixtures provided by toolcallcheck."""
 
 from __future__ import annotations
 
-from agentharness.mock_server import MockMCPServer, MockTool
-from agentharness.runner import AgentRunner
+from toolcallcheck.mock_server import MockMCPServer, MockTool
+from toolcallcheck.runner import AgentRunner
 
 
 class TestFixtures:

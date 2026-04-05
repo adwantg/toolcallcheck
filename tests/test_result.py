@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from agentharness.result import AgentResult, ToolCall, TraceEntry
+from toolcallcheck.result import AgentResult, ToolCall, TraceEntry
 
 
 class TestToolCall:

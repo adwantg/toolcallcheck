@@ -9,8 +9,8 @@ from pathlib import Path
 
 import pytest
 
-from agentharness.result import AgentResult, ToolCall
-from agentharness.snapshot import assert_snapshot
+from toolcallcheck.result import AgentResult, ToolCall
+from toolcallcheck.snapshot import assert_snapshot
 
 
 class TestSnapshot:

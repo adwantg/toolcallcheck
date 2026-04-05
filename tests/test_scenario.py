@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from agentharness.scenario import scenario
+from toolcallcheck.scenario import scenario
 
 CASES = [
     {"id": "case_a", "value": 1, "expected": "one"},

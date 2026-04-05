@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from agentharness.fake_model import FakeModel
+from toolcallcheck.fake_model import FakeModel
 
 
 class TestFakeModelScripted:

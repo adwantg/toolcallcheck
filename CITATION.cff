@@ -4,11 +4,11 @@ authors:
   - family-names: "Adwant"
     given-names: "Goutam"
     alias: "adwantg"
-title: "agentharness: Deterministic, pytest-native testing for tool-using AI agents"
+title: "toolcallcheck: Deterministic, pytest-native testing for tool-using AI agents"
 version: "0.1.0"
 date-released: "2026-04-04"
-url: "https://github.com/adwantg/agentharness"
-repository-code: "https://github.com/adwantg/agentharness"
+url: "https://github.com/adwantg/toolcallcheck"
+repository-code: "https://github.com/adwantg/toolcallcheck"
 license: MIT
 keywords:
   - python

@@ -1,4 +1,4 @@
-"""Assertion helpers for agentharness.
+"""Assertion helpers for toolcallcheck.
 
 Every function raises ``AssertionError`` with a structured, human-readable
 diff message on failure so that CI output is immediately actionable.
@@ -9,8 +9,8 @@ from __future__ import annotations
 import re
 from typing import Any
 
-from agentharness.diff import format_tool_call_diff, format_value_diff
-from agentharness.result import AgentResult
+from toolcallcheck.diff import format_tool_call_diff, format_value_diff
+from toolcallcheck.result import AgentResult
 
 # ---------------------------------------------------------------------------
 # Tool-call assertions

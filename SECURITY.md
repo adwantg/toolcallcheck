@@ -1,4 +1,4 @@
-# Security Policy for agentharness
+# Security Policy for toolcallcheck
 
 ## Supported Versions
 
